@@ -1,11 +1,15 @@
 package com.sonnyapps.quizapp
 
+import android.app.Activity
+import android.content.Intent
+import android.content.IntentSender
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.sonnyapps.quizapp.databinding.ActivityQuizQuestionBinding
@@ -18,6 +22,13 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
     private var mSelectedOptionPosition : Int = 0
     private var checked: Boolean = false
     private var approve: Boolean = false
+    private var finished: Boolean = false
+
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val intent = it.data
+        }
+    }
 
     private lateinit var binding: ActivityQuizQuestionBinding
 
@@ -39,6 +50,7 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
         binding.tvOptionThree.setOnClickListener(this)
         binding.tvOptionFour.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
+
     }
 
     private fun setQuestion() {
@@ -107,7 +119,7 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
                                 onClickDisabler(true)
                                 setQuestion()
                             } else -> {
-                            Toast.makeText(this, "You have successfully completed the Quiz", Toast.LENGTH_SHORT).show()
+                            startForResult.launch(Intent(this, DisplayResult::class.java))
                             }
                         }
                         checked = false
@@ -142,6 +154,7 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
 
         if(mCurrentPosition == mQuestionList!!.size) {
             "FINISH".also { binding.btnSubmit.text = it }
+            finished = true
         }else {
             "GO TO NEXT QUESTION".also {
                 binding.btnSubmit.text = it

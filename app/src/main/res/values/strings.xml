@@ -9,4 +9,6 @@
     <string name="an_image">An image</string>
     <string name="_0_10">0/10</string>
     <string name="submit">Submit</string>
+    <string name="you_finished_the_quiz">You finished the quiz.</string>
+    <string name="a_trophy">A trophy</string>
 </resources>
