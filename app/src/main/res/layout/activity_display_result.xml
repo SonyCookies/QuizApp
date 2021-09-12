@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/ic_bg"
-        android:theme="@style/NoActionBarTheme"
         android:gravity="center"
         android:padding="16dp">
 
