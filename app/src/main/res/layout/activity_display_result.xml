@@ -18,18 +18,40 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/you_finished_the_quiz"
+            android:text="Your Score:"
             android:textAlignment="center"
             android:textSize="36sp"
+            android:textColor="@color/victoryYellow" />
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:textAlignment="center"
+            android:textSize="60sp"
             android:textColor="@color/victoryYellow"
             android:textStyle="bold"/>
 
         <ImageView
             android:layout_width="300dp"
-            android:layout_height="400dp"
+            android:layout_height="300dp"
             android:scaleType="centerCrop"
             android:contentDescription="@string/a_trophy"
             android:src="@drawable/ic_trophy" />
+
+        <Button
+            android:id="@+id/btn_start_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/play_again"
+            android:padding="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/victoryYellow"/>
+
+
 
 
     </LinearLayout>

@@ -2,7 +2,6 @@ package com.sonnyapps.quizapp
 
 import android.app.Activity
 import android.content.Intent
-import android.content.IntentSender
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -23,10 +22,19 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
     private var checked: Boolean = false
     private var approve: Boolean = false
     private var finished: Boolean = false
+    private var score: Int = 10
 
-    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val intent = it.data
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            mCurrentPosition = 1
+            mSelectedOptionPosition = 0
+            checked = false
+            approve = false
+            onClickDisabler(true)
+            finished = false
+            score = 10
+            mQuestionList!!.shuffle()
+            setQuestion()
         }
     }
 
@@ -43,6 +51,7 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
 
 
         mQuestionList = Constants.getQuestions()
+        mQuestionList!!.shuffle()
         setQuestion()
 
         binding.tvOptionOne.setOnClickListener(this)
@@ -54,7 +63,6 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setQuestion() {
-
         val question: Question = mQuestionList!![mCurrentPosition-1]
 
         defaultOptionsView()
@@ -119,7 +127,9 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
                                 onClickDisabler(true)
                                 setQuestion()
                             } else -> {
-                            startForResult.launch(Intent(this, DisplayResult::class.java))
+                            val intent = Intent(this, DisplayResult::class.java)
+                            intent.putExtra("EXTRA_SCORE", score)
+                            startForResult.launch(intent)
                             }
                         }
                         checked = false
@@ -149,6 +159,7 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
         val question = mQuestionList!![mCurrentPosition - 1]
         if(question.correctAnswer != mSelectedOptionPosition) {
             answerView(mSelectedOptionPosition, R.drawable.wrong_option_bg)
+            score--
         }
         answerView(question.correctAnswer, R.drawable.correct_option_bg)
 
