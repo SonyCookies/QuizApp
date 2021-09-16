@@ -50,7 +50,7 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
         optionList?.add(binding.tvOptionFour)
 
 
-        mQuestionList = Constants.getQuestions()
+        mQuestionList = Constants.getQuestionsFlags()
         mQuestionList!!.shuffle()
         setQuestion()
 

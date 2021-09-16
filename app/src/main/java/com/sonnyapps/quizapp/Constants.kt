@@ -2,8 +2,8 @@ package com.sonnyapps.quizapp
 
 object Constants {
 
-    fun getQuestions(): ArrayList<Question>{
-        val questionsList = ArrayList<Question>()
+    fun getQuestionsFlags(): ArrayList<Question>{
+        val questionsList = ArrayList<Question>(10)
 
         // 1
 
